@@ -1,0 +1,40 @@
+{
+    "name": "persiliao/utils",
+    "description": "A tools package that could help developer solved the problem quickly",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "php",
+        "utils"
+    ],
+    "authors": [
+        {
+            "name": "PersiLiao",
+            "email": "xiangchu.liao@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "ext-mbstring": "*",
+        "ext-json": "*",
+        "ext-simplexml": "*",
+        "ext-libxml": "*",
+        "ext-ctype": "*",
+        "ext-fileinfo": "*",
+        "doctrine/inflector": "^2.0",
+        "psr/log": "^1.1",
+        "psr/container": "^1.0",
+        "symfony/var-dumper": "^5.1",
+        "nesbot/carbon": "^2.37",
+        "symfony/serializer": "^5.1",
+        "symfony/finder": "^5.1"
+    },
+    "autoload": {
+        "files": [
+            "src/Functions.php"
+        ],
+        "psr-4": {
+            "PersiLiao\\Utils\\": "src/"
+        }
+    }
+}
