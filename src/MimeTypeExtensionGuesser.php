@@ -681,6 +681,7 @@ class MimeTypeExtensionGuesser
         'image/x-cmx' => 'cmx',
         'image/x-freehand' => 'fh',
         'image/x-icon' => 'ico',
+        'image/x-icns' => 'icns',
         'image/x-mrsid-image' => 'sid',
         'image/x-pcx' => 'pcx',
         'image/x-pict' => 'pic',
