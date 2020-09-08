@@ -4,7 +4,8 @@ declare(strict_types=1);
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
- * @link https://www.github.com/persiliao
+ *
+ * @see https://www.github.com/persiliao
  */
 
 namespace PersiLiao\Utils;
@@ -25,6 +26,7 @@ class Backoff
 
     /**
      * Backoff interval.
+     *
      * @var int
      */
     private $currentMs;
@@ -34,19 +36,12 @@ class Backoff
      */
     public function __construct(int $firstMs = 0)
     {
-        if($firstMs < 0){
-            throw new InvalidArgumentException(
-                'first backoff interval must be greater or equal than 0'
-            );
+        if ($firstMs < 0) {
+            throw new InvalidArgumentException('first backoff interval must be greater or equal than 0');
         }
 
-        if($firstMs > Backoff::CAP){
-            throw new InvalidArgumentException(
-                sprintf(
-                    'first backoff interval must be less or equal than %d milliseconds',
-                    self::CAP
-                )
-            );
+        if ($firstMs > Backoff::CAP) {
+            throw new InvalidArgumentException(sprintf('first backoff interval must be less or equal than %d milliseconds', self::CAP));
         }
 
         $this->firstMs = $firstMs;
@@ -58,7 +53,7 @@ class Backoff
      */
     public function sleep(): void
     {
-        if($this->currentMs === 0){
+        if (0 === $this->currentMs) {
             return;
         }
 
@@ -68,13 +63,14 @@ class Backoff
         // see: https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/
         $this->currentMs = random_int($this->firstMs, $this->currentMs * 3);
 
-        if($this->currentMs > self::CAP){
+        if ($this->currentMs > self::CAP) {
             $this->currentMs = self::CAP;
         }
     }
 
     /**
      * Get the next backoff for logging, etc.
+     *
      * @return int next backoff
      */
     public function nextBackoff(): int

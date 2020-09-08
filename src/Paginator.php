@@ -5,7 +5,7 @@
  * @link https://www.github.com/persiliao
  */
 
-declare(strict_types=1);
+declare( strict_types = 1 );
 
 namespace PersiLiao\Utils;
 
@@ -13,28 +13,33 @@ use function ceil;
 use function implode;
 use function max;
 
-class Paginator
-{
+class Paginator{
+
     /**
      * @var int
      */
     private $start;
+
     /**
      * @var int
      */
     private $end;
+
     /**
      * @var int
      */
     private $currentPage;
+
     /**
      * @var int
      */
     private $perPage;
+
     /**
      * @var int
      */
     private $pageTotal;
+
     /**
      * @var int
      */
@@ -42,6 +47,7 @@ class Paginator
 
     /**
      * Paginator constructor.
+     *
      * @param int $currentPage
      * @param int $perPage
      * @param int $rowsTotalNum
@@ -69,7 +75,7 @@ class Paginator
         }else{
             $this->pageTotal = 0;
         }
-        $this->start = ($this->currentPage - 1) * $this->perPage;
+        $this->start = ( $this->currentPage - 1 ) * $this->perPage;
         $this->end = $this->perPage;
     }
 
@@ -83,11 +89,13 @@ class Paginator
 
     /**
      * @param int $currentPage
+     *
      * @return Paginator
      */
     public function setCurrentPage(int $currentPage): Paginator
     {
         $this->currentPage = $currentPage;
+
         return $this;
     }
 
@@ -101,11 +109,13 @@ class Paginator
 
     /**
      * @param int $perPage
+     *
      * @return Paginator
      */
     public function setPerPage(int $perPage): Paginator
     {
         $this->perPage = $perPage;
+
         return $this;
     }
 
@@ -119,11 +129,13 @@ class Paginator
 
     /**
      * @param int $rowsTotalNum
+     *
      * @return Paginator
      */
     public function setRowsTotalNum(int $rowsTotalNum): Paginator
     {
         $this->rowsTotalNum = $rowsTotalNum;
+
         return $this;
     }
 
@@ -137,17 +149,22 @@ class Paginator
 
     /**
      * @param int $pageTotal
+     *
      * @return Paginator
      */
     public function setPageTotal(int $pageTotal): Paginator
     {
         $this->pageTotal = $pageTotal;
+
         return $this;
     }
 
     public function getSQLLimitToString()
     {
-        return implode(',', [ $this->getStart(), $this->getEnd() ]);
+        return implode(',', [
+            $this->getStart(),
+            $this->getEnd(),
+        ]);
     }
 
     /**
@@ -160,11 +177,13 @@ class Paginator
 
     /**
      * @param int $start
+     *
      * @return Paginator
      */
     public function setStart(int $start): Paginator
     {
         $this->start = $start;
+
         return $this;
     }
 
@@ -178,11 +197,14 @@ class Paginator
 
     /**
      * @param int $end
+     *
      * @return Paginator
      */
     public function setEnd(int $end): Paginator
     {
         $this->end = $end;
+
         return $this;
     }
+
 }

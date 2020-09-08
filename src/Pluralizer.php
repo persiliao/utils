@@ -4,7 +4,8 @@ declare(strict_types=1);
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
- * @link https://www.github.com/persiliao
+ *
+ * @see https://www.github.com/persiliao
  */
 
 namespace PersiLiao\Utils;
@@ -21,53 +22,52 @@ class Pluralizer
      *
      * @var array
      */
-    public static $uncountable
-        = [
-            'audio',
-            'bison',
-            'cattle',
-            'chassis',
-            'compensation',
-            'coreopsis',
-            'data',
-            'deer',
-            'education',
-            'emoji',
-            'equipment',
-            'evidence',
-            'feedback',
-            'firmware',
-            'fish',
-            'furniture',
-            'gold',
-            'hardware',
-            'information',
-            'jedi',
-            'kin',
-            'knowledge',
-            'love',
-            'metadata',
-            'money',
-            'moose',
-            'news',
-            'nutrition',
-            'offspring',
-            'plankton',
-            'pokemon',
-            'police',
-            'rain',
-            'rice',
-            'series',
-            'sheep',
-            'software',
-            'species',
-            'swine',
-            'traffic',
-            'wheat',
-        ];
+    public static $uncountable = [
+        'audio',
+        'bison',
+        'cattle',
+        'chassis',
+        'compensation',
+        'coreopsis',
+        'data',
+        'deer',
+        'education',
+        'emoji',
+        'equipment',
+        'evidence',
+        'feedback',
+        'firmware',
+        'fish',
+        'furniture',
+        'gold',
+        'hardware',
+        'information',
+        'jedi',
+        'kin',
+        'knowledge',
+        'love',
+        'metadata',
+        'money',
+        'moose',
+        'news',
+        'nutrition',
+        'offspring',
+        'plankton',
+        'pokemon',
+        'police',
+        'rain',
+        'rice',
+        'series',
+        'sheep',
+        'software',
+        'species',
+        'swine',
+        'traffic',
+        'wheat',
+    ];
 
     /**
-     * @var null|Inflector
+     * @var Inflector|null
      */
     protected static $inflector;
 
@@ -75,12 +75,13 @@ class Pluralizer
      * Get the plural form of an English word.
      *
      * @param string $value
-     * @param int $count
+     * @param int    $count
+     *
      * @return string
      */
     public static function plural($value, $count = 2)
     {
-        if((int)abs($count) === 1 || static::uncountable($value)){
+        if (1 === (int) abs($count) || static::uncountable($value)) {
             return $value;
         }
 
@@ -93,6 +94,7 @@ class Pluralizer
      * Determine if the given value is uncountable.
      *
      * @param string $value
+     *
      * @return bool
      */
     protected static function uncountable($value)
@@ -105,15 +107,8 @@ class Pluralizer
      */
     public static function getInflector(): Inflector
     {
-        if(is_null(static::$inflector)){
-            static::$inflector = new Inflector(
-                new CachedWordInflector(new RulesetInflector(
-                    English\Rules::getSingularRuleset()
-                )),
-                new CachedWordInflector(new RulesetInflector(
-                    English\Rules::getPluralRuleset()
-                ))
-            );
+        if (is_null(static::$inflector)) {
+            static::$inflector = new Inflector(new CachedWordInflector(new RulesetInflector(English\Rules::getSingularRuleset())), new CachedWordInflector(new RulesetInflector(English\Rules::getPluralRuleset())));
         }
 
         return static::$inflector;
@@ -129,14 +124,20 @@ class Pluralizer
      *
      * @param string $value
      * @param string $comparison
+     *
      * @return string
      */
     protected static function matchCase($value, $comparison)
     {
-        $functions = [ 'mb_strtolower', 'mb_strtoupper', 'ucfirst', 'ucwords' ];
+        $functions = [
+            'mb_strtolower',
+            'mb_strtoupper',
+            'ucfirst',
+            'ucwords',
+        ];
 
-        foreach($functions as $function){
-            if(call_user_func($function, $comparison) === $comparison){
+        foreach ($functions as $function) {
+            if (call_user_func($function, $comparison) === $comparison) {
                 return call_user_func($function, $value);
             }
         }
@@ -148,6 +149,7 @@ class Pluralizer
      * Get the singular form of an English word.
      *
      * @param string $value
+     *
      * @return string
      */
     public static function singular($value)

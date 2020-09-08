@@ -4,7 +4,8 @@ declare(strict_types=1);
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
- * @link https://www.github.com/persiliao
+ *
+ * @see https://www.github.com/persiliao
  */
 
 namespace PersiLiao\Utils\Contracts;
@@ -25,6 +26,7 @@ interface MessageBag
      * Merge a new array of messages into the bag.
      *
      * @param array|MessageProvider $messages
+     *
      * @return $this
      */
     public function merge($messages);

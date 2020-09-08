@@ -4,7 +4,8 @@ declare(strict_types=1);
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
- * @link https://www.github.com/persiliao
+ *
+ * @see https://www.github.com/persiliao
  */
 
 namespace PersiLiao\Utils\Traits;
@@ -18,6 +19,7 @@ trait Container
 
     /**
      * Add a value to container by identifier.
+     *
      * @param mixed $value
      */
     public static function set(string $id, $value)
@@ -28,7 +30,8 @@ trait Container
     /**
      * Finds an entry of the container by its identifier and returns it,
      * Retunrs $default when does not exists in the container.
-     * @param null|mixed $default
+     *
+     * @param mixed|null $default
      */
     public static function get(string $id, $default = null)
     {

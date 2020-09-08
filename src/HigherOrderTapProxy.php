@@ -4,7 +4,8 @@ declare(strict_types=1);
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
- * @link https://www.github.com/persiliao
+ *
+ * @see https://www.github.com/persiliao
  */
 
 namespace PersiLiao\Utils;
@@ -32,7 +33,8 @@ class HigherOrderTapProxy
      * Dynamically pass method calls to the target.
      *
      * @param string $method
-     * @param array $parameters
+     * @param array  $parameters
+     *
      * @return mixed
      */
     public function __call($method, $parameters)

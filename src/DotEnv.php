@@ -2,7 +2,8 @@
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
- * @link https://www.github.com/persiliao
+ *
+ * @see https://www.github.com/persiliao
  */
 
 declare(strict_types=1);
@@ -17,11 +18,7 @@ class DotEnv
 {
     public static function load(string $paths): void
     {
-        $repository = RepositoryBuilder::createWithNoAdapters()
-            ->addAdapter(EnvConstAdapter::class)
-            ->addWriter(PutenvAdapter::class)
-            ->immutable()
-            ->make();
+        $repository = RepositoryBuilder::createWithNoAdapters()->addAdapter(EnvConstAdapter::class)->addWriter(PutenvAdapter::class)->immutable()->make();
         \Dotenv\Dotenv::create($repository, $paths)->load();
     }
 }

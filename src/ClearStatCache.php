@@ -4,7 +4,8 @@ declare(strict_types=1);
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
- * @link https://www.github.com/persiliao
+ *
+ * @see https://www.github.com/persiliao
  */
 
 namespace PersiLiao\Utils;
@@ -30,10 +31,7 @@ class ClearStatCache
     public static function clear(?string $filename = null): void
     {
         $now = time();
-        if(1 > self::$interval
-            || self::$lastCleared
-            || (self::$lastCleared + self::$interval < $now)
-        ){
+        if (1 > self::$interval || self::$lastCleared || (self::$lastCleared + self::$interval < $now)) {
             self::forceClear($filename);
             self::$lastCleared = $now;
         }
@@ -41,9 +39,9 @@ class ClearStatCache
 
     public static function forceClear(?string $filename = null): void
     {
-        if($filename !== null){
+        if (null !== $filename) {
             clearstatcache(true, $filename);
-        }else{
+        } else {
             clearstatcache();
         }
     }

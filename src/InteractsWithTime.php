@@ -4,7 +4,8 @@ declare(strict_types=1);
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
- * @link https://www.github.com/persiliao
+ *
+ * @see https://www.github.com/persiliao
  */
 
 namespace PersiLiao\Utils;
@@ -24,20 +25,19 @@ trait InteractsWithTime
     {
         $delay = $this->parseDateInterval($delay);
 
-        return $delay instanceof DateTimeInterface
-            ? max(0, $delay->getTimestamp() - $this->currentTime())
-            : (int)$delay;
+        return $delay instanceof DateTimeInterface ? max(0, $delay->getTimestamp() - $this->currentTime()) : (int) $delay;
     }
 
     /**
      * If the given value is an interval, convert it to a DateTime instance.
      *
      * @param \DateInterval|\DateTimeInterface|int $delay
+     *
      * @return \DateTimeInterface|int
      */
     protected function parseDateInterval($delay)
     {
-        if($delay instanceof DateInterval){
+        if ($delay instanceof DateInterval) {
             $delay = Carbon::now()->add($delay);
         }
 
@@ -61,8 +61,6 @@ trait InteractsWithTime
     {
         $delay = $this->parseDateInterval($delay);
 
-        return $delay instanceof DateTimeInterface
-            ? $delay->getTimestamp()
-            : Carbon::now()->addSeconds($delay)->getTimestamp();
+        return $delay instanceof DateTimeInterface ? $delay->getTimestamp() : Carbon::now()->addSeconds($delay)->getTimestamp();
     }
 }

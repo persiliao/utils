@@ -4,7 +4,8 @@ declare(strict_types=1);
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
- * @link https://www.github.com/persiliao
+ *
+ * @see https://www.github.com/persiliao
  */
 
 namespace PersiLiao\Utils\Codec;
@@ -17,11 +18,11 @@ class Json
 {
     public static function encode($data, $options = JSON_UNESCAPED_UNICODE): string
     {
-        if($data instanceof Jsonable){
-            return (string)$data;
+        if ($data instanceof Jsonable) {
+            return (string) $data;
         }
 
-        if($data instanceof Arrayable){
+        if ($data instanceof Arrayable) {
             $data = $data->toArray();
         }
 
@@ -34,7 +35,7 @@ class Json
 
     protected static function handleJsonError($lastError, $message)
     {
-        if($lastError === JSON_ERROR_NONE){
+        if (JSON_ERROR_NONE === $lastError) {
             return;
         }
 

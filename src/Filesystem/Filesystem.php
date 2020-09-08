@@ -4,12 +4,12 @@ declare(strict_types=1);
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
- * @link https://www.github.com/persiliao
+ *
+ * @see https://www.github.com/persiliao
  */
 
 namespace PersiLiao\Utils\Filesystem;
 
-use ErrorException;
 use FilesystemIterator;
 use PersiLiao\Utils\Traits\Macroable;
 use Symfony\Component\Finder\Finder;
@@ -29,7 +29,7 @@ class Filesystem
      */
     public function getRequire(string $path)
     {
-        if($this->isFile($path)){
+        if ($this->isFile($path)) {
             return require $path;
         }
 
@@ -87,8 +87,8 @@ class Filesystem
      */
     public function prepend(string $path, string $data): int
     {
-        if($this->exists($path)){
-            return $this->put($path, $data . $this->get($path));
+        if ($this->exists($path)) {
+            return $this->put($path, $data.$this->get($path));
         }
 
         return $this->put($path, $data);
@@ -106,29 +106,31 @@ class Filesystem
      * Write the contents of a file.
      *
      * @param resource|string $contents
+     *
      * @return bool|int
      */
     public function put(string $path, $contents, bool $lock = false)
     {
-        if($lock){
-            return $this->atomic($path, function($path) use ($contents){
+        if ($lock) {
+            return $this->atomic($path, function ($path) use ($contents) {
                 $handle = fopen($path, 'wb+');
-                if($handle){
+                if ($handle) {
                     $wouldBlock = false;
                     flock($handle, LOCK_EX | LOCK_NB, $wouldBlock);
-                    while($wouldBlock){
+                    while ($wouldBlock) {
                         usleep(1000);
                         flock($handle, LOCK_EX | LOCK_NB, $wouldBlock);
                     }
-                    try{
+                    try {
                         fwrite($handle, $contents);
-                    }finally{
+                    } finally {
                         flock($handle, LOCK_UN);
                         fclose($handle);
                     }
                 }
             });
         }
+
         return file_put_contents($path, $contents);
     }
 
@@ -144,7 +146,7 @@ class Filesystem
      */
     public function get(string $path, bool $lock = false): string
     {
-        if($this->isFile($path)){
+        if ($this->isFile($path)) {
             return $lock ? $this->sharedGet($path) : file_get_contents($path);
         }
 
@@ -156,24 +158,25 @@ class Filesystem
      */
     public function sharedGet(string $path): string
     {
-        return $this->atomic($path, function($path){
+        return $this->atomic($path, function ($path) {
             $contents = '';
             $handle = fopen($path, 'rb');
-            if($handle){
+            if ($handle) {
                 $wouldBlock = false;
                 flock($handle, LOCK_SH | LOCK_NB, $wouldBlock);
-                while($wouldBlock){
+                while ($wouldBlock) {
                     usleep(1000);
                     flock($handle, LOCK_SH | LOCK_NB, $wouldBlock);
                 }
-                try{
+                try {
                     clearstatcache(true, $path);
                     $contents = fread($handle, $this->size($path) ?: 1);
-                }finally{
+                } finally {
                     flock($handle, LOCK_UN);
                     fclose($handle);
                 }
             }
+
             return $contents;
         });
     }
@@ -199,7 +202,7 @@ class Filesystem
      */
     public function chmod(string $path, ?int $mode = null)
     {
-        if($mode){
+        if ($mode) {
             return chmod($path, $mode);
         }
 
@@ -219,7 +222,7 @@ class Filesystem
      */
     public function link(string $target, string $link)
     {
-        if(!$this->windowsOs()){
+        if (!$this->windowsOs()) {
             return symlink($target, $link);
         }
 
@@ -233,7 +236,7 @@ class Filesystem
      */
     public function windowsOs(): bool
     {
-        return stripos(PHP_OS, 'win') === 0;
+        return 0 === stripos(PHP_OS, 'win');
     }
 
     /**
@@ -333,22 +336,17 @@ class Filesystem
      */
     public function files(string $directory, bool $hidden = false): array
     {
-        return iterator_to_array(
-            Finder::create()->files()->ignoreDotFiles(!$hidden)->in($directory)->depth(0)->sortByName(),
-            false
-        );
+        return iterator_to_array(Finder::create()->files()->ignoreDotFiles(!$hidden)->in($directory)->depth(0)->sortByName(), false);
     }
 
     /**
      * Get all of the files from the given directory (recursive).
+     *
      * @return \Symfony\Component\Finder\SplFileInfo[]
      */
     public function allFiles(string $directory, bool $hidden = false): array
     {
-        return iterator_to_array(
-            Finder::create()->files()->ignoreDotFiles(!$hidden)->in($directory)->sortByName(),
-            false
-        );
+        return iterator_to_array(Finder::create()->files()->ignoreDotFiles(!$hidden)->in($directory)->sortByName(), false);
     }
 
     /**
@@ -356,43 +354,42 @@ class Filesystem
      */
     public function moveDirectory(string $from, string $to, bool $overwrite = false): bool
     {
-        if($overwrite && $this->isDirectory($to) && !$this->deleteDirectory($to)){
+        if ($overwrite && $this->isDirectory($to) && !$this->deleteDirectory($to)) {
             return false;
         }
 
-        return @rename($from, $to) === true;
+        return true === @rename($from, $to);
     }
 
     /**
      * Recursively delete a directory.
-     *
      * The directory itself may be optionally preserved.
      */
     public function deleteDirectory(string $directory, bool $preserve = false): bool
     {
-        if(!$this->isDirectory($directory)){
+        if (!$this->isDirectory($directory)) {
             return false;
         }
 
         $items = new FilesystemIterator($directory);
 
-        foreach($items as $item){
+        foreach ($items as $item) {
             // If the item is a directory, we can just recurse into the function and
             // delete that sub-directory otherwise we'll just delete the file and
             // keep iterating through each file until the directory is cleaned.
-            if($item->isDir() && !$item->isLink()){
+            if ($item->isDir() && !$item->isLink()) {
                 $this->deleteDirectory($item->getPathname());
             }
 
             // If the item is just a file, we can go ahead and delete it since we're
             // just looping through and waxing all of the files in this directory
             // and calling directories recursively, so we delete the real path.
-            else{
+            else {
                 $this->delete($item->getPathname());
             }
         }
 
-        if(!$preserve){
+        if (!$preserve) {
             @rmdir($directory);
         }
 
@@ -410,8 +407,8 @@ class Filesystem
 
         $success = true;
 
-        foreach($paths as $path){
-            if(!@unlink($path)){
+        foreach ($paths as $path) {
+            if (!@unlink($path)) {
                 $success = false;
             }
         }
@@ -424,7 +421,7 @@ class Filesystem
      */
     public function copyDirectory(string $directory, string $destination, int $options = null): bool
     {
-        if(!$this->isDirectory($directory)){
+        if (!$this->isDirectory($directory)) {
             return false;
         }
 
@@ -433,22 +430,22 @@ class Filesystem
         // If the destination directory does not actually exist, we will go ahead and
         // create it recursively, which just gets the destination prepared to copy
         // the files over. Once we make the directory we'll proceed the copying.
-        if(!$this->isDirectory($destination)){
+        if (!$this->isDirectory($destination)) {
             $this->makeDirectory($destination, 0777, true);
         }
 
         $items = new FilesystemIterator($directory, $options);
 
-        foreach($items as $item){
+        foreach ($items as $item) {
             // As we spin through items, we will check to see if the current file is actually
             // a directory or a file. When it is actually a directory we will need to call
             // back into this function recursively to keep copying these nested folders.
-            $target = $destination . '/' . $item->getBasename();
+            $target = $destination.'/'.$item->getBasename();
 
-            if($item->isDir()){
+            if ($item->isDir()) {
                 $path = $item->getPathname();
 
-                if(!$this->copyDirectory($path, $target, $options)){
+                if (!$this->copyDirectory($path, $target, $options)) {
                     return false;
                 }
             }
@@ -456,8 +453,8 @@ class Filesystem
             // If the current items is just a regular file, we will just copy this to the new
             // location and keep looping. If for some reason the copy fails we'll bail out
             // and return false, so the developer is aware that the copy process failed.
-            else{
-                if(!$this->copy($item->getPathname(), $target)){
+            else {
+                if (!$this->copy($item->getPathname(), $target)) {
                     return false;
                 }
             }
@@ -471,7 +468,7 @@ class Filesystem
      */
     public function makeDirectory(string $path, int $mode = 0755, bool $recursive = false, bool $force = false): bool
     {
-        if($force){
+        if ($force) {
             return @mkdir($path, $mode, $recursive);
         }
 
@@ -493,8 +490,8 @@ class Filesystem
     {
         $allDirectories = $this->directories($directory);
 
-        if(!empty($allDirectories)){
-            foreach($allDirectories as $directoryName){
+        if (!empty($allDirectories)) {
+            foreach ($allDirectories as $directoryName) {
                 $this->deleteDirectory($directoryName);
             }
 
@@ -511,7 +508,7 @@ class Filesystem
     {
         $directories = [];
 
-        foreach(Finder::create()->in($directory)->directories()->depth(0)->sortByName() as $dir){
+        foreach (Finder::create()->in($directory)->directories()->depth(0)->sortByName() as $dir) {
             $directories[] = $dir->getPathname();
         }
 

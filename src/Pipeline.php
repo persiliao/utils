@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare( strict_types = 1 );
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
@@ -16,8 +16,8 @@ use Psr\Container\ContainerInterface;
  * This file mostly code come from illuminate/pipe,
  * thanks Laravel Team provide such a useful class.
  */
-class Pipeline
-{
+class Pipeline{
+
     /**
      * The container implementation.
      *
@@ -53,6 +53,7 @@ class Pipeline
 
     /**
      * Set the object being sent through the pipeline.
+     *
      * @param mixed $passable
      */
     public function send($passable): self
@@ -70,6 +71,7 @@ class Pipeline
     public function through($pipes): self
     {
         $this->pipes = is_array($pipes) ? $pipes : func_get_args();
+
         return $this;
     }
 
@@ -107,19 +109,28 @@ class Pipeline
                     return $pipe($passable, $stack);
                 }
                 if(!is_object($pipe)){
-                    [ $name, $parameters ] = $this->parsePipeString($pipe);
+                    [
+                        $name,
+                        $parameters,
+                    ] = $this->parsePipeString($pipe);
 
                     // If the pipe is a string we will parse the string and resolve the class out
                     // of the dependency injection container. We can then build a callable and
                     // execute the pipe function giving in the parameters that are required.
                     $pipe = $this->container->get($name);
 
-                    $parameters = array_merge([ $passable, $stack ], $parameters);
+                    $parameters = array_merge([
+                        $passable,
+                        $stack,
+                    ], $parameters);
                 }else{
                     // If the pipe is already an object we'll just make a callable and pass it to
                     // the pipe as-is. There is no need to do any extra parsing and formatting
                     // since the object we're given was already a fully instantiated object.
-                    $parameters = [ $passable, $stack ];
+                    $parameters = [
+                        $passable,
+                        $stack,
+                    ];
                 }
 
                 return method_exists($pipe, $this->method) ? $pipe->{$this->method}(...$parameters) : $pipe(...$parameters);
@@ -131,17 +142,24 @@ class Pipeline
      * Parse full pipe string to get name and parameters.
      *
      * @param string $pipe
+     *
      * @return array
      */
     protected function parsePipeString($pipe)
     {
-        [ $name, $parameters ] = array_pad(explode(':', $pipe, 2), 2, []);
+        [
+            $name,
+            $parameters,
+        ] = array_pad(explode(':', $pipe, 2), 2, []);
 
         if(is_string($parameters)){
             $parameters = explode(',', $parameters);
         }
 
-        return [ $name, $parameters ];
+        return [
+            $name,
+            $parameters,
+        ];
     }
 
     /**
@@ -153,4 +171,5 @@ class Pipeline
             return $destination($passable);
         };
     }
+
 }

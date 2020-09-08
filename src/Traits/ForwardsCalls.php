@@ -4,7 +4,8 @@ declare(strict_types=1);
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
- * @link https://www.github.com/persiliao
+ *
+ * @see https://www.github.com/persiliao
  */
 
 namespace PersiLiao\Utils\Traits;
@@ -19,20 +20,21 @@ trait ForwardsCalls
      * Forward a method call to the given object.
      *
      * @param mixed $object
+     *
      * @throws Error
      */
     protected function forwardCallTo($object, string $method, array $parameters)
     {
-        try{
+        try {
             return $object->{$method}(...$parameters);
-        }catch(Error | BadMethodCallException $e){
+        } catch (Error | BadMethodCallException $e) {
             $pattern = '~^Call to undefined method (?P<class>[^:]+)::(?P<method>[^\(]+)\(\)$~';
 
-            if(!preg_match($pattern, $e->getMessage(), $matches)){
+            if (!preg_match($pattern, $e->getMessage(), $matches)) {
                 throw $e;
             }
 
-            if($matches['class'] !== get_class($object) || $matches['method'] !== $method){
+            if ($matches['class'] !== get_class($object) || $matches['method'] !== $method) {
                 throw $e;
             }
 
@@ -42,6 +44,7 @@ trait ForwardsCalls
 
     /**
      * Throw a bad method call exception for the given method.
+     *
      * @throws BadMethodCallException
      */
     protected static function throwBadMethodCallException(string $method): void

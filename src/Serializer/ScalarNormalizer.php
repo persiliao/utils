@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare( strict_types = 1 );
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
@@ -12,11 +12,12 @@ namespace PersiLiao\Utils\Serializer;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+
 use function get_class;
 use function is_scalar;
 
-class ScalarNormalizer implements NormalizerInterface, DenormalizerInterface, CacheableSupportsMethodInterface
-{
+class ScalarNormalizer implements NormalizerInterface, DenormalizerInterface, CacheableSupportsMethodInterface{
+
     public function hasCacheableSupportsMethod(): bool
     {
         return get_class($this) === __CLASS__;
@@ -46,7 +47,8 @@ class ScalarNormalizer implements NormalizerInterface, DenormalizerInterface, Ca
             'float',
             'bool',
             'mixed',
-            'array', // TODO: Symfony\Component\Serializer\Normalizer\ArrayDenormalizer not support array, so it denormalized in ScalarNormalizer.
+            'array',
+            // TODO: Symfony\Component\Serializer\Normalizer\ArrayDenormalizer not support array, so it denormalized in ScalarNormalizer.
         ]);
     }
 
@@ -59,4 +61,5 @@ class ScalarNormalizer implements NormalizerInterface, DenormalizerInterface, Ca
     {
         return is_scalar($data);
     }
+
 }

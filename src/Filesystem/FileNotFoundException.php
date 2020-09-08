@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare( strict_types = 1 );
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
@@ -9,6 +9,6 @@ declare(strict_types=1);
 
 namespace PersiLiao\Utils\Filesystem;
 
-class FileNotFoundException extends \Exception
-{
+class FileNotFoundException extends \Exception{
+
 }

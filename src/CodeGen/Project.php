@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare( strict_types = 1 );
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
@@ -15,8 +15,8 @@ use PersiLiao\Utils\Str;
 /**
  * Read composer.json autoload psr-4 rules to figure out the namespace or path.
  */
-class Project
-{
+class Project{
+
     public function className(string $path): string
     {
         return $this->namespace($path);
@@ -27,7 +27,7 @@ class Project
         $ext = pathinfo($path, PATHINFO_EXTENSION);
 
         if($ext !== ''){
-            $path = substr($path, 0, -(strlen($ext) + 1));
+            $path = substr($path, 0, -( strlen($ext) + 1 ));
         }else{
             $path = trim($path, '/') . '/';
         }
@@ -64,4 +64,5 @@ class Project
 
         throw new \RuntimeException("Invalid class name: {$name}");
     }
+
 }

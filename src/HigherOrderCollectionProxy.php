@@ -4,7 +4,8 @@ declare(strict_types=1);
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
- * @link https://www.github.com/persiliao
+ *
+ * @see https://www.github.com/persiliao
  */
 
 namespace PersiLiao\Utils;
@@ -44,7 +45,7 @@ class HigherOrderCollectionProxy
      */
     public function __get(string $key)
     {
-        return $this->collection->{$this->method}(function($value) use ($key){
+        return $this->collection->{$this->method}(function ($value) use ($key) {
             return is_array($value) ? $value[$key] : $value->{$key};
         });
     }
@@ -54,7 +55,7 @@ class HigherOrderCollectionProxy
      */
     public function __call(string $method, array $parameters)
     {
-        return $this->collection->{$this->method}(function($value) use ($method, $parameters){
+        return $this->collection->{$this->method}(function ($value) use ($method, $parameters) {
             return $value->{$method}(...$parameters);
         });
     }

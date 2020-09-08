@@ -4,7 +4,8 @@ declare(strict_types=1);
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
- * @link https://www.github.com/persiliao
+ *
+ * @see https://www.github.com/persiliao
  */
 
 namespace PersiLiao\Utils\Packer;
@@ -20,6 +21,6 @@ class PhpSerializerPacker implements PackerInterface
 
     public function unpack(string $data)
     {
-        return unserialize($data, [ 'allowed_classes' => false ]);
+        return unserialize($data, ['allowed_classes' => false]);
     }
 }

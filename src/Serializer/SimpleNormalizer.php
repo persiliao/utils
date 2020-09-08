@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare( strict_types = 1 );
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
@@ -11,8 +11,8 @@ namespace PersiLiao\Utils\Serializer;
 
 use PersiLiao\Contract\NormalizerInterface;
 
-class SimpleNormalizer implements NormalizerInterface
-{
+class SimpleNormalizer implements NormalizerInterface{
+
     public function normalize($object)
     {
         return $object;
@@ -35,4 +35,5 @@ class SimpleNormalizer implements NormalizerInterface
                 return $data;
         }
     }
+
 }

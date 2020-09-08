@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare( strict_types = 1 );
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
@@ -18,8 +18,8 @@ use PersiLiao\Utils\Contracts\Jsonable;
  * Most of the methods in this file come from illuminate/support,
  * thanks Laravel Team provide such a useful class.
  */
-class Fluent implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
-{
+class Fluent implements ArrayAccess, Arrayable, Jsonable, JsonSerializable{
+
     /**
      * All of the attributes set on the fluent instance.
      *
@@ -43,7 +43,8 @@ class Fluent implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
      * Handle dynamic calls to the fluent instance to set attributes.
      *
      * @param string $method
-     * @param array $parameters
+     * @param array  $parameters
+     *
      * @return $this
      */
     public function __call($method, $parameters)
@@ -67,7 +68,7 @@ class Fluent implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
      * Dynamically set the value of an attribute.
      *
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function __set($key, $value)
     {
@@ -77,7 +78,7 @@ class Fluent implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
     /**
      * Get an attribute from the fluent instance.
      *
-     * @param string $key
+     * @param string     $key
      * @param null|mixed $default
      */
     public function get($key, $default = null)
@@ -93,7 +94,7 @@ class Fluent implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
      * Set the value at the given offset.
      *
      * @param string $offset
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function offsetSet($offset, $value)
     {
@@ -104,6 +105,7 @@ class Fluent implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
      * Dynamically check if an attribute is set.
      *
      * @param string $key
+     *
      * @return bool
      */
     public function __isset($key)
@@ -115,6 +117,7 @@ class Fluent implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
      * Determine if the given offset exists.
      *
      * @param string $offset
+     *
      * @return bool
      */
     public function offsetExists($offset)
@@ -151,6 +154,7 @@ class Fluent implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
      * Convert the fluent instance to JSON.
      *
      * @param int $options
+     *
      * @return string
      */
     public function toJson($options = 0)
@@ -195,4 +199,5 @@ class Fluent implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
     {
         return $this->get($offset);
     }
+
 }

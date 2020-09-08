@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare( strict_types = 1 );
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
@@ -9,12 +9,11 @@ declare(strict_types=1);
 
 namespace PersiLiao\Utils\Codec;
 
-
 use function serialize;
 use function unserialize;
 
-class Serialize
-{
+class Serialize{
+
     public static function encode($data)
     {
         return serialize($data);
@@ -24,4 +23,5 @@ class Serialize
     {
         return unserialize($data, $options);
     }
+
 }
