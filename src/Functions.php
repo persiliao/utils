@@ -10,13 +10,6 @@ namespace PersiLiao\Utils;
  * @see    https://www.github.com/persiliao
  */
 
-use PersiLiao\Utils\ApplicationContext;
-use PersiLiao\Utils\Arr;
-use PersiLiao\Utils\Backoff;
-use PersiLiao\Utils\Collection;
-use PersiLiao\Utils\HigherOrderTapProxy;
-use PersiLiao\Utils\Str;
-
 if(!function_exists('value')){
     /**
      * Return the default value of the given value.
