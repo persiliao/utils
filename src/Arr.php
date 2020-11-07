@@ -599,4 +599,21 @@ class Arr{
         return $tree;
     }
 
+    public static function transformToLevelTree(array $items, int $childrenId = 0, int $level = 0, string $primaryKey = 'id', string $childrenKey = 'pid', bool $isClear = true)
+    {
+        static $res = [];
+        if($isClear === true){
+            $res = [];
+        }
+        foreach($items as $item){
+            if($item[$childrenKey] == $childrenId){
+                $item['level'] = $level;
+                $res[] = $item;
+                self::transformToLevelTree($items, $item[$primaryKey], $level + 1, $primaryKey, $childrenKey, false);
+            }
+        }
+
+        return $res;
+    }
+
 }
