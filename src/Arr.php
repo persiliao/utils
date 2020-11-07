@@ -609,7 +609,7 @@ class Arr{
             if($item[$childrenKey] == $childrenId){
                 $item['level'] = $level;
                 $res[] = $item;
-                self::transformToLevelTree($items, $item[$primaryKey], $level + 1, $primaryKey, $childrenKey, false);
+                self::transformToLevelTree($items, (int)$item[$primaryKey], $level + 1, $primaryKey, $childrenKey, false);
             }
         }
 
