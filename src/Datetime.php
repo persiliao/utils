@@ -26,7 +26,7 @@ class Datetime{
             '1' => '秒',
         ];
         foreach($f as $k => $v){
-            $c = floor($t / (int)$k);
+            $c = (int)floor($t / (int)$k);
             if(0 !== $c){
                 $tip = $c . $v;
                 break;

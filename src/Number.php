@@ -17,7 +17,7 @@ class Number{
             '1000' => 'K',
         ];
         foreach($f as $k => $v){
-            $c = floor($number / (int)$k);
+            $c = (int)floor($number / (int)$k);
             if(0 !== $c){
                 $tip = $c . $v;
                 break;
