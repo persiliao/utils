@@ -173,7 +173,7 @@ class Arr{
      *
      * @return array
      */
-    public static function divide($array)
+    public static function divide($array):array
     {
         return [
             array_keys($array),
@@ -585,7 +585,7 @@ class Arr{
      *
      * @return array
      */
-    public static function transformToChildrenTree(array $items, string $primaryKey = 'id', string $parentKey = 'pid', string $childrenKey = 'children')
+    public static function transformToChildrenTree(array $items, string $primaryKey = 'id', string $parentKey = 'pid', string $childrenKey = 'children'): array
     {
         $tree = [];
         foreach($items as $item){
@@ -599,7 +599,7 @@ class Arr{
         return $tree;
     }
 
-    public static function transformToLevelTree(array $items, int $childrenId = 0, int $level = 0, string $primaryKey = 'id', string $childrenKey = 'pid', bool $isClear = true)
+    public static function transformToLevelTree(array $items, int $childrenId = 0, int $level = 0, string $primaryKey = 'id', string $childrenKey = 'pid', bool $isClear = true): array
     {
         static $res = [];
         if($isClear === true){
