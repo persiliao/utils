@@ -24,7 +24,7 @@ class ClearStatCache
     /**
      * When the filesystem stat cache was last cleared.
      *
-     * @var int
+     * @var int|null
      */
     private static $lastCleared;
 
