@@ -1,16 +1,18 @@
 <?php
 
-declare( strict_types = 1 );
+declare(strict_types=1);
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
- * @link https://www.github.com/persiliao
+ * @link   https://www.github.com/persiliao
  */
 
 namespace PersiLiao\Utils\CodeGen;
 
 use PersiLiao\Utils\Composer;
 use PersiLiao\Utils\Str;
+
+use function PersiLiao\Utils\data_get;
 
 /**
  * Read composer.json autoload psr-4 rules to figure out the namespace or path.
@@ -27,7 +29,7 @@ class Project{
         $ext = pathinfo($path, PATHINFO_EXTENSION);
 
         if($ext !== ''){
-            $path = substr($path, 0, -( strlen($ext) + 1 ));
+            $path = substr($path, 0, -(strlen($ext) + 1));
         }else{
             $path = trim($path, '/') . '/';
         }

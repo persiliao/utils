@@ -11,8 +11,15 @@ namespace PersiLiao\Utils;
 
 use PersiLiao\Utils\Traits\Macroable;
 
+use function count;
+use function preg_match;
+use function preg_match_all;
 use function preg_replace_callback;
+use function str_replace;
+use function stripslashes;
 use function strlen;
+use function trim;
+use function urldecode;
 
 /**
  * Most of the methods in this file come from illuminate/support,
@@ -1567,4 +1574,48 @@ class Str{
         return mb_substr($string, $start, $length, 'UTF-8');
     }
 
+    /**
+     * Returns the key word of the string
+     *
+     * @param string $keyword
+     * @param bool   $sentence
+     *
+     * @return array
+     */
+    public static function keywords( string $keyword, bool $sentence = false ): array {
+
+        $keyword = urldecode( $keyword );
+        $keyword = stripslashes( $keyword );
+        $keyword = str_replace( [ "\r", "\n" ], '', $keyword );
+        if ( $sentence ) {
+            return [ $keyword ];
+        }
+        if ( preg_match_all( '/".*?("|$)|((?<=[\t ",+])|^)[^\t ",+]+/', $keyword, $matches ) ) {
+            $terms = $matches[0];
+            if ( ! empty( $terms ) ) {
+                foreach ( $terms as $term ) {
+
+                    if ( preg_match( '/^".+"$/', $term ) ) {
+                        $term = trim( $term, "\"'" );
+                    } else {
+                        $term = trim( $term, "\"' " );
+                    }
+
+                    if ( ! $term || ( 1 === strlen( $term ) && preg_match( '/^[a-z\-]$/i', $term ) ) ) {
+                        continue;
+                    }
+
+                    $search_terms[] = $term;
+                }
+            }
+
+            if ( empty( $search_terms ) || count( $search_terms ) > 9 ) {
+                $search_terms = [ $keyword ];
+            }
+        } else {
+            $search_terms = [ $keyword ];
+        }
+
+        return $search_terms;
+    }
 }
