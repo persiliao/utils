@@ -2,10 +2,11 @@
 /**
  * @author Persi.Liao
  * @email xiangchu.liao@gmail.com
- * @link https://www.github.com/persiliao
+ *
+ * @see   https://www.github.com/persiliao
  */
 
-declare( strict_types = 1 );
+declare(strict_types=1);
 
 namespace PersiLiao\Utils;
 
@@ -13,8 +14,8 @@ use function ceil;
 use function implode;
 use function max;
 
-class Paginator{
-
+class Paginator
+{
     /**
      * @var int
      */
@@ -47,10 +48,6 @@ class Paginator{
 
     /**
      * Paginator constructor.
-     *
-     * @param int $currentPage
-     * @param int $perPage
-     * @param int $rowsTotalNum
      */
     public function __construct(int $rowsTotalNum, int $currentPage = 1, int $perPage = 10)
     {
@@ -62,36 +59,28 @@ class Paginator{
 
     protected function init()
     {
-        if($this->rowsTotalNum > 0){
-            if($this->rowsTotalNum < $this->perPage){
+        if ($this->rowsTotalNum > 0) {
+            if ($this->rowsTotalNum < $this->perPage) {
                 $this->pageTotal = 1;
-            }else{
-                if($this->rowsTotalNum % $this->perPage){
+            } else {
+                if ($this->rowsTotalNum % $this->perPage) {
                     $this->pageTotal = ceil($this->rowsTotalNum / $this->perPage);
-                }else{
+                } else {
                     $this->pageTotal = $this->rowsTotalNum / $this->perPage;
                 }
             }
-        }else{
+        } else {
             $this->pageTotal = 0;
         }
-        $this->start = ( $this->currentPage - 1 ) * $this->perPage;
+        $this->start = ($this->currentPage - 1) * $this->perPage;
         $this->end = $this->perPage;
     }
 
-    /**
-     * @return int
-     */
     public function getCurrentPage(): int
     {
         return $this->currentPage;
     }
 
-    /**
-     * @param int $currentPage
-     *
-     * @return Paginator
-     */
     public function setCurrentPage(int $currentPage): Paginator
     {
         $this->currentPage = $currentPage;
@@ -99,19 +88,11 @@ class Paginator{
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getPerPage(): int
     {
         return $this->perPage;
     }
 
-    /**
-     * @param int $perPage
-     *
-     * @return Paginator
-     */
     public function setPerPage(int $perPage): Paginator
     {
         $this->perPage = $perPage;
@@ -119,19 +100,11 @@ class Paginator{
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getRowsTotalNum(): int
     {
         return $this->rowsTotalNum;
     }
 
-    /**
-     * @param int $rowsTotalNum
-     *
-     * @return Paginator
-     */
     public function setRowsTotalNum(int $rowsTotalNum): Paginator
     {
         $this->rowsTotalNum = $rowsTotalNum;
@@ -139,19 +112,11 @@ class Paginator{
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getPageTotal(): int
     {
-        return $this->pageTotal;
+        return (int) round($this->pageTotal);
     }
 
-    /**
-     * @param int $pageTotal
-     *
-     * @return Paginator
-     */
     public function setPageTotal(int $pageTotal): Paginator
     {
         $this->pageTotal = $pageTotal;
@@ -167,19 +132,11 @@ class Paginator{
         ]);
     }
 
-    /**
-     * @return int
-     */
     public function getStart(): int
     {
         return $this->start;
     }
 
-    /**
-     * @param int $start
-     *
-     * @return Paginator
-     */
     public function setStart(int $start): Paginator
     {
         $this->start = $start;
@@ -187,24 +144,15 @@ class Paginator{
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getEnd(): int
     {
         return $this->end;
     }
 
-    /**
-     * @param int $end
-     *
-     * @return Paginator
-     */
     public function setEnd(int $end): Paginator
     {
         $this->end = $end;
 
         return $this;
     }
-
 }
